@@ -1,0 +1,338 @@
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>H5小骰子</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <style>
+    * { margin: 0; padding: 0; }
+    body {
+        background: #292D2E; 
+        background:url('./img/bg.png');
+       
+        }
+
+    html,body{
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+        font-family:'MicrosoftYaHei','Heiti SC','Droidsansfallback',"Arial","黑体","宋体",sans-serif,Helvetica;
+    }
+ 
+    .hand {  
+         /*c */
+         position: absolute; 
+         top:0px; z-index:-1;     
+         overflow: hidden;
+    }
+    .hand img{
+        display: block;outline: none;border:0; 
+    }
+    .topOpen { 
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top:0px; 
+        z-index:-1;
+        overflow: hidden;
+    }
+    .hand2 { 
+        position: absolute; 
+        top:0px; 
+        z-index:1;
+    }
+    .upArrow { 
+        position: absolute;
+        z-index:9999; 
+        /* top: 24%; */
+        text-align:centers
+    }
+    .upArrow img{
+        z-index:9999; 
+        display:block; 
+        margin:0 auto;
+        margin-top: 100%;
+        opacity:0.7;
+        width:30%;
+        height: 60%;
+    }
+    .hand-animate {
+         -webkit-animation: hand_move infinite 0.2s; 
+            -moz-animation: hand_move infinite 0.2s;
+            -ms-animation: hand_move infinite 0.2s;
+            -o-animation: hand_move infinite 0.2s;
+    }
+    .result { background: #393B3C; border: #2C2C2C 1px solid; box-shadow: inset #4D4F50 0 0 0 1px; border-radius: 10px; color: #0b233f; padding: 10px; width: 300px; position: absolute; top: 300px; left: 50%; margin-left: -161px; opacity: 0;
+        -webkit-transition: all 1s;
+           -moz-transition: all 1s;
+            -ms-transition: all 1s;
+             -o-transition: all 1s;
+                transition: all 1s; }
+    .result .pic { width: 50px; height: 50px; float: left; background: #0b233f; }
+    .result .con { overflow: hidden; zoom: 1; padding-left: 10px; line-height: 24px; }
+    .result-show { opacity: 1; margin-top: 50px; }
+    .loading { position: absolute; top: 240px; left: 50%; margin-left: -50px; width: 100px; height: 100px; background: url(http://dtop.powereasy.net/UploadFiles/xzhihong/shake/spinner.png) no-repeat; background-size: 100px 100px; opacity: 0;
+        -webkit-animation: loading infinite linear .5s;
+           -moz-animation: loading infinite linear .5s;
+            -ms-animation: loading infinite linear .5s;
+             -o-animation: loading infinite linear .5s;
+                animation: loading infinite linear .5s;
+        -webkit-transition: all .5s;
+           -moz-transition: all .5s;
+            -ms-transition: all .5s;
+             -o-transition: all .5s;
+                transition: all .5s; }
+    .loading-show { opacity: 1; }
+    
+    @-webkit-keyframes hand_move {
+       0% {
+            -webkit-transform: translateX(0,0);
+               -moz-transform: translateX(0,0);
+                -ms-transform: translateX(0,0);
+                 -o-transform: translateX(0,0);
+                    transform: translateX(0,0);}
+        12.5% {
+            -webkit-transform: translate(25px, -10px);
+                -moz-transform:translate(25px, -10px);
+                -ms-transform: translate(25px, -10px);
+                 -o-transform: translate(25px, -10px);
+                    transform: translate(25px, -10px)}
+        25% {
+            -webkit-transform: translate(50px, -20px);
+                -moz-transform:translate(50px, -20px);
+                -ms-transform: translate(50px, -20px);
+                 -o-transform: translate(50px, -20px);
+                    transform: translate(50px, -20px)}
+        37.5% {
+            -webkit-transform: translate(25px, -10px);
+                -moz-transform:translate(25px, -10px);
+                -ms-transform: translate(25px, -10px);
+                 -o-transform: translate(25px, -10px);
+                    transform: translate(25px, -10px)}
+        50% {
+            -webkit-transform: translateX(0,0);
+               -moz-transform: translateX(0,0);
+                -ms-transform: translateX(0,0);
+                 -o-transform: translateX(0,0);
+                    transform: translateX(0,0); }
+        62.5% {
+            -webkit-transform: translate(-25px, 10px);
+                -moz-transform:translate(-25px, 10px);
+                -ms-transform: translate(-25px, 10px);
+                 -o-transform: translate(-25px, 10px);
+                    transform: translate(-25px, 10px)}
+        75% {
+            -webkit-transform: translate(-50px, 20px);
+                -moz-transform:translate(-50px, 20px);
+                -ms-transform: translate(-50px, 20px);
+                 -o-transform: translate(-50px, 20px);
+                    transform: translate(-50px, 20px)}
+        87.5% {
+            -webkit-transform: translate(-25px, 10px);
+                -moz-transform:translate(-25px, 10px);
+                -ms-transform: translate(-25px, 10px);
+                 -o-transform: translate(-25px, 10px);
+                    transform: translate(-25px, 10px)}
+        100% {
+            -webkit-transform: translateX(0,0);
+               -moz-transform: translateX(0,0);
+                -ms-transform: translateX(0,0);
+                 -o-transform: translateX(0,0);
+                    transform: translateX(0,0); }
+    }
+    @-webkit-keyframes loading {
+        0% {
+            -webkit-transform: rotate(0);
+               -moz-transform: rotate(0);
+                -ms-transform: rotate(0);
+                 -o-transform: rotate(0);
+                    transform: rotate(0); }
+        100% {
+            -webkit-transform: rotate(360deg);
+               -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                 -o-transform: rotate(360deg);
+                    transform: rotate(360deg); }
+    }
+    .diceSize{
+        width: 1.1rem;
+        height: 1.1rem; 
+    }
+            #test{
+                height: 3.7rem;
+                width: 3.8rem;
+                top: 373px;
+                left: 50%;
+                margin-left: -2rem;
+                position: absolute;
+            }    
+            .dice{
+                width: 1.1rem;
+                height: 1.1rem; 
+                margin-top:0px;
+            }  
+            .button{
+                margin-left: 30%;
+                top: 65%;
+                width:3rem;
+                height:1rem;
+                /* font-size: 20px; */
+                position: absolute;
+            }  
+
+            #resultPoints{
+                color: aliceblue;
+                margin-left: 0.1rem;
+                margin-top: 65%;
+                position: absolute;
+            }
+            p { font-size:0.32rem; font-family:'MicrosoftYaHei','Heiti SC','Droidsansfallback',"Arial","黑体","宋体",sans-serif;}    
+             .foolter{
+            position: fixed;bottom: 0;width: 100%;
+            /* height:50px; */
+          }
+          .setting{
+            width: 45px;height:45px;background: url("./img/point/setting.png") no-repeat ;
+            background-size: 100%;margin-left: auto;margin-right: 10px;padding-bottom: 20px;
+          }
+          .border-top{border-top:0.5px solid #fff;}
+          .footerFlex{display:none;align-items:center;box-sizing: border-box;}
+          .flexItem{flex:1;border-right:1px solid #fff;height: 48px;margin-top: 0.5px;}
+          .footerFlex .flexItem:nth-last-child(1){border-right:none}
+          .defaultitem img{width: 100%;height:100%}
+          .flexItem .flexitem2{width:35px;height:35px;margin:6px auto};
+          .flexItem .flexitem2 img{width:100%;}
+          .select{background: #314d80}
+          .sumbox{display: none;align-items:center;box-sizing: border-box;border-top:1px solid #fff}
+          .icon{
+            position: relative;top:4px;margin-left:14px;
+          }
+          .icon-sum::before{
+            position: absolute;content: "";
+            left: -18px;width:15px;height:15px;background: url("./img/point/sum/sum.png") no-repeat;
+            background-size:100% ;top:3px;
+          }
+          .icon-count::before{
+            position: absolute;content: "";
+            left: -18px;width:15px;height:15px;background: url("./img/point/sum/count.png") no-repeat;
+            background-size:100% ;top:3px;
+          }
+          .sumboxItem{flex:1;text-align: center;font-size: 19px;color:red;border-right:1px solid #fff;height:35px;padding-top: 4px}
+          .sumboxItem:nth-last-child(1){border-right:none;font-size: 15px;}
+    </style>
+</head>
+<body>
+<!--             
+         <button type="button" id="rock" style=""><img  src="./img/icon-rock.png" style="width:130px;height:50px"/></button>
+         <button type="button" id="confirm" style="display: none" >确定</button>
+         <button type="button" id="out" style="display: none;pointer-events: auto;">開盅！！</button>
+         <button type="button" id="restart" style="display: none">重新开始</button> -->
+
+         <div class='button' id="rock" style=""><img  src="./img/icon-rock.png" style="width:150px;height:50px"/></div>
+         <div class='button' id="confirm" style="display: none" ><img  src="./img/icon-confirm.png" style="width:150px;height:50px"/></div>
+         <div class='button' id="out" style="display: none;pointer-events: auto;"><img  src="./img/icon-open.png" style="width:150px;height:50px"/></div>
+         <div class='button' id="restart" style="display: none;"><img src="./img/icon-again.png" style="width:150px;height:50px"/></div>
+
+        <div class="dice1" >
+            <div id='test' style="z-index:-2;">
+            </div>
+        </div>
+        <div class="diceSize" >
+              
+        </div>
+        <div >
+         <!--    <p id="resultPoints" style="display: none">您掷得点数是<span></span>
+            </p> -->
+        </div>
+        <div id="hand" class="hand" >
+            <img id ='handI'src="./img/i8_01.png"/ style="display: block">
+        </div> 
+        <div id="topOpen" class="topOpen" style="display: none">
+                <!-- <img id ='topOpenI' src="./img/i8_20.png"/ style="display: block"> -->
+        </div> 
+
+        <div id ='handleCanvas'style="display: none">
+            <canvas width="900" height="900" id="canvas" class="hand2" ></canvas>
+            <img src="./img/i8.png" style="display: none;" id="walk">
+        </div>
+
+<footer class="foolter ">
+  <div class="setting"></div>
+  <div class="footerFlex border-top" id="footerFlex"></div>
+  <div class="footerFlex border-top" id="footerFlex2"></div>
+  <div class="sumbox" >
+    <div class="sumboxItem">
+      <span class="icon-count icon" id="count-one"> 0</span>
+    </div>
+    <div class="sumboxItem">
+      <span class="icon-count icon"  id="count-two"> 0</span>
+    </div>
+    <div class="sumboxItem">
+      <span class="icon-count icon" id="count-three"> 0</span>
+    </div>
+    <div class="sumboxItem">
+      <span class="icon-count icon" id="count-four"> 0</span>
+    </div>
+    <div class="sumboxItem">
+      <span class="icon-count icon" id="count-five"> 0</span>
+    </div>
+     <div class="sumboxItem">
+      <span class="icon-count icon" id="count-six"> 0</span>
+    </div>
+    <div class="sumboxItem" >
+      <span class="icon-sum icon" id="count-total"> 0點</span>
+    </div>
+  </div>
+</footer>
+    <audio src="./img/123.mp3" controls="controls" preload id="music1" hidden>
+    <script type="text/javascript" src="./js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="./js/flexible.min.js"></script>
+   
+    <script type="text/javascript" src="./js/dice.js"></script>
+    <script type="text/javascript" src="./js/rock.js"></script>
+    <script type="text/javascript" src="./js/openRock.js"></script>
+     <script>
+      $(function(){
+        var itembox = $("#footerFlex");
+        var flexitem = ''
+        var arrimg = ['one','two','three','four','five','six']
+        for(var i = 0;i<arrimg.length;i++){
+            flexitem += '<div class="flexItem defaultitem">\
+              <img src="./img/point/'+arrimg[i]+'.png" />\
+            </div>'
+        }
+     
+        itembox.html(flexitem);
+      $(".setting").on("click",function(){
+        $("#footerFlex").css({"display":"flex"});
+        $(".setting").hide()
+      });
+      //
+      $("#footerFlex .flexItem").click(function(){
+        var i = $(this).index();
+        $(this).addClass("select").siblings().removeClass('select');
+        $("#footerFlex").css({"display":"none"});
+        
+         $(".setting").show();
+         createBubble(i+1)
+     /*    $("#footerFlex2").css({"display":"none"});
+        $(".sumbox").css({"display":"flex"});
+         */
+      });
+      //
+      var sumArr = ["1","2","3","4","5","6","7"];
+      var sumFlex = ''
+      for(var i = 0;i<sumArr.length;i++){
+            sumFlex += '<div class="flexItem">\
+            <div class="flexitem2">\
+              <img src="./img/point/sum/'+sumArr[i]+'点'+'.png"  style="width:100%;display:block"/>\
+             </div>\
+            </div>'
+      }
+      $("#footerFlex2").html(sumFlex)
+    })
+    </script>
+
+</body>
+</html>
